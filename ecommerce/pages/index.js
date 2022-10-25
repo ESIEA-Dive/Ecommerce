@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Product, Cart, HeroBanner, FooterBanner, Layout, Footer, Navbar} from '../components';
+import { client } from '../LIB/client' ;
 
 const Home = () => {
   return (
