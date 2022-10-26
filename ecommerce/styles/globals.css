@@ -113,6 +113,8 @@ width: 100%;
   transform: scale(1.1,1.1)
 }
 .product-image{
+  width: 250px;
+  height: 250px;
   border-radius: 15px;
   background-color: #ebebeb;
   transform: scale(1, 1);
@@ -204,7 +206,7 @@ width: 100%;
 .products-heading{
   text-align: center;
   margin: 40px 0px;
- color: #324d67;
+ color: #019CE5
 
 }
 .products-heading h2{
@@ -628,7 +630,9 @@ margin-top: 160px;
     height: 560px;
   }
   .hero-banner-image{
-    top: 3%;
+    height: 40%;
+    width: 60%;
+    top: 15%;
     right: 0;
   }
   .footer-banner-container{
