@@ -255,10 +255,8 @@ width: 100%;
   width: 350px;
   height: 350px;
   position: absolute;
-  /* top: -35%;
-  left: 8%; */
-  top: 5%;
-  left: 25%;
+  top: 0;
+  left: 30%;
 }
 .banner-desc .right{
   line-height: 1.4;
