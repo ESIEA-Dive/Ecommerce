@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { urlFor } from '../LIB/client';
 
-const HeroBanner = ({ heroBanner: {image, smallText, midText, Product, desc, largeText1, buttonText} }) => {
+const HeroBanner = ({ heroBanner: {image, smallText, midText, product, desc, largeText1, buttonText} }) => {
 
     // Don't need only if you want to change the name, to be easier
     // const { smallText: title, image: img, discount: disc, 
@@ -19,7 +19,7 @@ const HeroBanner = ({ heroBanner: {image, smallText, midText, Product, desc, lar
             <img src={urlFor(image)} alt='banner' className='hero-banner-image'/>
 
             <div>
-                <Link href={`/product/${Product}`}>
+                <Link href={`/product/${product}`}>
                     <button type='button'>{buttonText}</button>
                 </Link>
                 <div className='desc'>
