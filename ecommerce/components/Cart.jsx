@@ -11,7 +11,7 @@ import { urlFor } from '../LIB/client';
 const Cart = () => {
   
   const cartRef = useRef();
-  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove } = useStateContext();
  
   return (
     <div className="cart-wrapper" ref={cartRef}>
@@ -42,10 +42,9 @@ const Cart = () => {
         )}
 
         <div className='product-container'>
-          {cartItems.length >= 1 && cartItems.map((item) => (
+        {cartItems.length >= 1 && cartItems.map((item) => (
             <div className='product' key={item._id}>
-              <img src={urlFor(item?.image[0])}
-              className='cart-product-image' />
+              <img src={urlFor(item?.image[0])} className='cart-product-image' />
               <div className='item-desc'>
                 <div className='flex top'>
                   <h5>{item.name}</h5>
@@ -53,16 +52,16 @@ const Cart = () => {
                 </div>
                 <div className='flex bottom'>
                   <div>
-                    <p className='quantity-desc'>
-                          <span className='minus' onClick={() => toggleCartItemQuantity('dec', item._id)}><AiOutlineMinus /></span>
-                          <span className='num'>{totalQuantities}</span>
-                          <span className='plus' onClick={() => toggleCartItemQuantity('inc', item._id)}><AiOutlinePlus /></span>
-                      </p>
+                  <p className='quantity-desc'>
+                    <span className='minus' onClick={() => toggleCartItemQuantity(item._id, 'dec') }><AiOutlineMinus /></span>
+                    <span className='num'>{item.quantity}</span>
+                    <span className='plus' onClick={() => toggleCartItemQuantity(item._id, 'inc') }><AiOutlinePlus /></span>
+                  </p>
                   </div>
                   <button
                   type='remove-item'
                   className='remove-item'
-                  onClick=''>
+                  onClick={() => onRemove(item)}>
                     <TiDeleteOutline />
                   </button>
                 </div>
@@ -76,7 +75,7 @@ const Cart = () => {
               <h3>SubTotal :</h3>
               <h3>${totalPrice}</h3>
             </div>
-            <div className='btn-cont' className='btn' onClick=''>
+            <div className='btn' onClick=''>
               Pay with Stripe
             </div>
           </div>

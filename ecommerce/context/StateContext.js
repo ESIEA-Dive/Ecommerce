@@ -48,21 +48,41 @@ export const StateContext =({ children }) => {
     };
 
     /* Remove from Cart */
-
+    const onRemove = (product) => {
+        foundProduct = cartItems.find((item) => item._id === product._id);
+        const newCartItems = cartItems.filter((item) => item._id !== product._id);
+    
+        setTotalPrice(
+          (prevTotalPrice) =>
+            prevTotalPrice - foundProduct.price * foundProduct.quantity
+        );
+        setTotalQuantities(
+          (prevTotalQuantities) => prevTotalQuantities - foundProduct.quantity
+        );
+        setCartItems(newCartItems);
+      };
     /*  */
     
-    const toggleCartItemQuantity = (value, id) => {
+    const toggleCartItemQuantity = (id, value) => {
         foundProduct = cartItems.find((item) => item._id === id);   // This is gonna find our item, select it
         index = cartItems.findIndex((product) => product._id === id); //This is gonna find the index of product with findIndex
         const newCartItems = cartItems.filter((item) => item._id !== id);
 
         if ( value === 'inc' ) {
-            setCartItems( [...newCartItems, {...foundProduct, quantity: foundProduct.quantity + 1}]);
+            setCartItems([
+                ...newCartItems.slice(0,index),
+                { ...foundProduct, quantity: foundProduct.quantity + 1 },
+                ...newCartItems.slice(index)
+               ]);
             setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price );
             setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + 1 );
         } else if ( value === 'dec' ) {
             if(foundProduct.quantity > 1) {
-            setCartItems( [...newCartItems, {...foundProduct, quantity: foundProduct.quantity - 1}]);
+                setCartItems([
+                    ...newCartItems.slice(0,index),
+                    { ...foundProduct, quantity: foundProduct.quantity - 1 },
+                    ...newCartItems.slice(index)
+                   ]);
             setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price );
             setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1 ) ;
             }
@@ -83,7 +103,8 @@ export const StateContext =({ children }) => {
                 decQty,
                 addTo,
                 setShowCart,
-                toggleCartItemQuantity
+                toggleCartItemQuantity,
+                onRemove
             }}>
             {children}
         </Context.Provider>
