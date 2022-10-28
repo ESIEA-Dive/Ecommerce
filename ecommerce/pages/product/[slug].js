@@ -3,12 +3,15 @@ import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-
 
 import { Product } from '../../components';
 import { client, urlFor } from '../../LIB/client';
+import { useStateContext } from '../../context/StateContext';
 
 
 const ProductDetails = ({ product, products }) => {
     
     const { image, name, details, price } = product;
+    
     const [index, setIndex] = useState(0); 
+    const {decQty, incQty, qty, addTo} = useStateContext();
 
   return (
     <div>
@@ -20,6 +23,7 @@ const ProductDetails = ({ product, products }) => {
                 <div>
                     {image?.map((item, i) => ( 
                     <img
+                    key={`name_${item}`}
                     src={urlFor(item)}
                     className={i === index ? 'small-image selected-image' : 'small-image'}
                     onMouseEnter={() => setIndex(i)}
@@ -46,15 +50,15 @@ const ProductDetails = ({ product, products }) => {
                 <div className='quantity'>
                     <h3>Quantity :</h3>
                     <p className='quantity-desc'>
-                        <span className='minus' onClick=""><AiOutlineMinus /></span>
-                        <span className='num' onClick="">0</span>
-                        <span className='plus' onClick=""><AiOutlinePlus /></span>
+                        <span className='minus' onClick={decQty}><AiOutlineMinus /></span>
+                        <span className='num'>{qty}</span>
+                        <span className='plus' onClick={incQty}><AiOutlinePlus /></span>
                     </p>
                 </div>
                 <div className='buttons'>
                     <button type='button'
                     className='add-to-cart'
-                    onClick=''>Add to Cart</button>
+                    onClick={() => addTo(product, qty)}>Add to Cart</button>
                     <button type='button'
                     className='buy-now'
                     onClick=''>Buy Now</button>
@@ -66,7 +70,7 @@ const ProductDetails = ({ product, products }) => {
                 <div className='marquee'>
                     <div className='maylike-products-container track'>
                         {products.map((item) => (
-                            <Product key={item.slug} product={item} />
+                            <Product key={item._id} product={item} />
                         ))}
                     </div>
                 </div>
